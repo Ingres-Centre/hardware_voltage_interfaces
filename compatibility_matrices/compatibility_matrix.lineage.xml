@@ -107,4 +107,13 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <!-- GameKeys -->
+    <hal format="aidl" optional="true">
+        <name>vendor.lineage.gamekeys</name>
+        <version>1</version>
+        <interface>
+            <name>IGameKeys</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
 </compatibility-matrix>
