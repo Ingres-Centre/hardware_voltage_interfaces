@@ -116,4 +116,13 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <!-- Touch Injector -->
+    <hal format="aidl" optional="true">
+        <name>vendor.lineage.touchinjector</name>
+        <version>1</version>
+        <interface>
+            <name>ITouchInjector</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
 </compatibility-matrix>
