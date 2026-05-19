@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2022-2024 The LineageOS Project
- *
+ * SPDX-FileCopyrightText: The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #pragma once
 
+#include <models/IDevice.h>
+
 #include <cstdint>
 #include <string>
-#include "IDumpable.h"
 
 namespace aidl {
 namespace android {
@@ -19,7 +19,7 @@ namespace light {
  * A Linux backlight device.
  * @see https://www.kernel.org/doc/Documentation/ABI/stable/sysfs-class-backlight
  */
-class BacklightDevice : public IDumpable {
+class BacklightDevice : public IDevice {
   public:
     BacklightDevice() = delete;
 
@@ -30,6 +30,10 @@ class BacklightDevice : public IDumpable {
      */
     BacklightDevice(std::string name);
 
+    bool isOk() const override;
+    bool setState(const State& state) override;
+    void dump(int fd) const override;
+
     /**
      * Get the name of the backlight device.
      *
@@ -38,21 +42,12 @@ class BacklightDevice : public IDumpable {
     std::string getName() const;
 
     /**
-     * Return whether this backlight device exists.
-     *
-     * @return bool true if the backlight device exists, false otherwise
-     */
-    bool exists() const;
-
-    /**
      * Set the brightness of this backlight device.
      *
      * @param value The brightness value to set
      * @return bool true if the brightness was set successfully, false otherwise
      */
     bool setBrightness(uint8_t value);
-
-    void dump(int fd) const override;
 
   private:
     std::string mName;

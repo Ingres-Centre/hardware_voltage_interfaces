@@ -1,17 +1,17 @@
 /*
- * Copyright (C) 2024 The LineageOS Project
- *
+ * SPDX-FileCopyrightText: The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #pragma once
 
+#include <devices/BacklightDevice.h>
+#include <devices/LedDevice.h>
+#include <devices/RgbLedDevice.h>
+#include <models/IDumpable.h>
+#include <models/State.h>
+
 #include <vector>
-#include "BacklightDevice.h"
-#include "IDumpable.h"
-#include "LedDevice.h"
-#include "RgbLedDevice.h"
-#include "Utils.h"
 
 namespace aidl {
 namespace android {
@@ -22,18 +22,17 @@ class Devices : public IDumpable {
   public:
     Devices();
 
+    void dump(int fd) const override;
+
     bool hasBacklightDevices() const;
     bool hasButtonDevices() const;
     bool hasKeyboardDevices() const;
     bool hasNotificationDevices() const;
 
-    void setBacklightColor(rgb color);
-    void setButtonsColor(rgb color);
-    void setKeyboardColor(rgb color);
-    void setNotificationColor(rgb color, LightMode mode = LightMode::STATIC, uint32_t flashOnMs = 0,
-                              uint32_t flashOffMs = 0);
-
-    void dump(int fd) const override;
+    void setBacklightState(const State& state);
+    void setButtonsState(const State& state);
+    void setKeyboardState(const State& state);
+    void setNotificationState(const State& state);
 
   private:
     // Backlight

@@ -1,14 +1,15 @@
 /*
- * Copyright (C) 2021-2024 The LineageOS Project
- *
+ * SPDX-FileCopyrightText: The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #pragma once
 
+#include <Devices.h>
+#include <models/State.h>
+
 #include <aidl/android/hardware/light/BnLights.h>
 #include <mutex>
-#include "Devices.h"
 
 namespace aidl {
 namespace android {
@@ -19,7 +20,7 @@ class Lights : public BnLights {
   public:
     Lights();
 
-    ndk::ScopedAStatus setLightState(int32_t id, const HwLightState& state) override;
+    ndk::ScopedAStatus setLightState(int32_t id, const HwLightState& hwLightState) override;
     ndk::ScopedAStatus getLights(std::vector<HwLight>* _aidl_return) override;
 
     binder_status_t dump(int fd, const char** args, uint32_t numArgs) override;
@@ -29,9 +30,9 @@ class Lights : public BnLights {
 
     Devices mDevices;
 
-    HwLightState mLastBatteryState;
-    HwLightState mLastNotificationsState;
-    HwLightState mLastAttentionState;
+    State mLastBatteryState;
+    State mLastNotificationsState;
+    State mLastAttentionState;
     std::mutex mLedMutex;
 
     void updateNotificationColor();
